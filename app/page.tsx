@@ -1,65 +1,62 @@
-import Image from "next/image";
+import Shell from "./components/Shell";
+import Link from "next/link";
+import { mockRequests } from "./lib/data";
 
-export default function Home() {
+export default function HomePage() {
+  const counts = {
+    rg97: mockRequests.filter(r => r.type === "RG97" && r.status !== "Closed").length,
+    ter: mockRequests.filter(r => r.type === "TER" && r.status !== "Closed").length,
+    mysuper: mockRequests.filter(r => r.type === "MySuper" && r.status !== "Closed").length,
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <Shell>
+      <h1 className="mb-6 text-2xl font-heading text-qic-secondary-slate">Overview</h1>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <Tile href="/rg97" title="RG97" count={counts.rg97} tone="red" />
+        <Tile href="/ter" title="TER" count={counts.ter} tone="gold" />
+        <Tile href="/mysuper" title="MySuper" count={counts.mysuper} tone="sand" />
+      </div>
+    </Shell>
+  );
+}
+
+function Tile({
+  href,
+  title,
+  count,
+  tone,
+}: {
+  href: string;
+  title: string;
+  count: number;
+  tone: "red" | "gold" | "sand";
+}) {
+  // fixed class maps (no dynamic template strings)
+  const WRAPS: Record<typeof tone, string> = {
+    red:  "bg-qic-corp-red-20 ring-1 ring-qic-corp-red-60/30",
+    gold: "bg-qic-primary-gold-20 ring-1 ring-qic-primary-gold-60/30",
+    sand: "bg-qic-secondary-sand-20 ring-1 ring-qic-secondary-sand-60/30",
+  };
+  const HEADS: Record<typeof tone, string> = {
+    red:  "text-qic-corp-red",
+    gold: "text-qic-primary-gold",
+    sand: "text-qic-secondary-slate",
+  };
+
+  return (
+    <Link
+      href={href}
+      className={`group block rounded-xl2 p-5 shadow-sm transition hover:shadow-md ${WRAPS[tone]}`}
+    >
+      <div className={`text-lg font-heading ${HEADS[tone]}`}>{title}</div>
+      <div className="mt-6 flex items-baseline justify-between">
+        <div className={`text-4xl font-heading ${HEADS[tone]}`}>{count}</div>
+        <div className="text-xs uppercase tracking-wide text-qic-secondary-slate/70 group-hover:text-qic-secondary-slate">
+          Active requests →
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </Link>
   );
 }

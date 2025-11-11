@@ -1,26 +1,194 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---- Base tokens (light only) ---- */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  /* Force light UI for built-in form controls, scrollbars, etc. */
+  color-scheme: light;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+}
+
+#__next,
+#root {
+  height: 100%;
+}
+
+:root {
+  /* Lock light palette */
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Also hint to UA we’re light-only */
+  color-scheme: light;
+
+  /* Fonts */
+  --font-body: Arial, "Helvetica Neue", Helvetica, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-heading: Georgia, "Times New Roman", Times, serif;
+
+  /* Corporate */
+  --qic-corp-red: #BA2E29;
+  --qic-black: #000000;
+
+  /* Primary */
+  --qic-primary-blue:   #3B71C5;
+  --qic-primary-gold:   #F0C067;
+  --qic-primary-olive:  #A1B46C;
+  --qic-primary-tan:    #D68D5B;
+  --qic-primary-teal:   #60B0AF;
+  --qic-primary-clay:   #C7796F;
+
+  /* Secondary */
+  --qic-secondary-slate:   #354552;
+  --qic-secondary-sky:     #7290B5;
+  --qic-secondary-forest:  #233F2F;
+  --qic-secondary-sage:    #8B987B;
+  --qic-secondary-plum:    #603147;
+  --qic-secondary-rose:    #8E6D6F;
+  --qic-secondary-sand:    #E0C09F;
+  --qic-secondary-ink:     #020302;
+}
+
+/* ---- Tailwind v4 theme mapping ---- */
+@theme inline {
+  /* System colors so you can use bg-background / text-foreground */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Fonts → utilities: font-sans, font-heading */
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  /* Corporate */
+  --color-qic-corp-red: var(--qic-corp-red);
+  --color-qic-black:    var(--qic-black);
+
+  /* Primary */
+  --color-qic-primary-blue:  var(--qic-primary-blue);
+  --color-qic-primary-gold:  var(--qic-primary-gold);
+  --color-qic-primary-olive: var(--qic-primary-olive);
+  --color-qic-primary-tan:   var(--qic-primary-tan);
+  --color-qic-primary-teal:  var(--qic-primary-teal);
+  --color-qic-primary-clay:  var(--qic-primary-clay);
+
+  /* Secondary */
+  --color-qic-secondary-slate:  var(--qic-secondary-slate);
+  --color-qic-secondary-sky:    var(--qic-secondary-sky);
+  --color-qic-secondary-forest: var(--qic-secondary-forest);
+  --color-qic-secondary-sage:   var(--qic-secondary-sage);
+  --color-qic-secondary-plum:   var(--qic-secondary-plum);
+  --color-qic-secondary-rose:   var(--qic-secondary-rose);
+  --color-qic-secondary-sand:   var(--qic-secondary-sand);
+  --color-qic-secondary-ink:    var(--qic-secondary-ink);
+
+  /* ---- Ready-made TINTS (20, 40, 60, 80%) for all colors ---- */
+  /* Use: bg-qic-corp-red-20, text-qic-primary-blue-60, etc. */
+  /* Corporate */
+  --color-qic-corp-red-20: color-mix(in oklab, var(--qic-corp-red) 20%, white);
+  --color-qic-corp-red-40: color-mix(in oklab, var(--qic-corp-red) 40%, white);
+  --color-qic-corp-red-60: color-mix(in oklab, var(--qic-corp-red) 60%, white);
+  --color-qic-corp-red-80: color-mix(in oklab, var(--qic-corp-red) 80%, white);
+
+  --color-qic-black-20: color-mix(in oklab, var(--qic-black) 20%, white);
+  --color-qic-black-40: color-mix(in oklab, var(--qic-black) 40%, white);
+  --color-qic-black-60: color-mix(in oklab, var(--qic-black) 60%, white);
+  --color-qic-black-80: color-mix(in oklab, var(--qic-black) 80%, white);
+
+  /* Primary */
+  --color-qic-primary-blue-20:  color-mix(in oklab, var(--qic-primary-blue) 20%, white);
+  --color-qic-primary-blue-40:  color-mix(in oklab, var(--qic-primary-blue) 40%, white);
+  --color-qic-primary-blue-60:  color-mix(in oklab, var(--qic-primary-blue) 60%, white);
+  --color-qic-primary-blue-80:  color-mix(in oklab, var(--qic-primary-blue) 80%, white);
+
+  --color-qic-primary-gold-20:  color-mix(in oklab, var(--qic-primary-gold) 20%, white);
+  --color-qic-primary-gold-40:  color-mix(in oklab, var(--qic-primary-gold) 40%, white);
+  --color-qic-primary-gold-60:  color-mix(in oklab, var(--qic-primary-gold) 60%, white);
+  --color-qic-primary-gold-80:  color-mix(in oklab, var(--qic-primary-gold) 80%, white);
+
+  --color-qic-primary-olive-20: color-mix(in oklab, var(--qic-primary-olive) 20%, white);
+  --color-qic-primary-olive-40: color-mix(in oklab, var(--qic-primary-olive) 40%, white);
+  --color-qic-primary-olive-60: color-mix(in oklab, var(--qic-primary-olive) 60%, white);
+  --color-qic-primary-olive-80: color-mix(in oklab, var(--qic-primary-olive) 80%, white);
+
+  --color-qic-primary-tan-20:   color-mix(in oklab, var(--qic-primary-tan) 20%, white);
+  --color-qic-primary-tan-40:   color-mix(in oklab, var(--qic-primary-tan) 40%, white);
+  --color-qic-primary-tan-60:   color-mix(in oklab, var(--qic-primary-tan) 60%, white);
+  --color-qic-primary-tan-80:   color-mix(in oklab, var(--qic-primary-tan) 80%, white);
+
+  --color-qic-primary-teal-20:  color-mix(in oklab, var(--qic-primary-teal) 20%, white);
+  --color-qic-primary-teal-40:  color-mix(in oklab, var(--qic-primary-teal) 40%, white);
+  --color-qic-primary-teal-60:  color-mix(in oklab, var(--qic-primary-teal) 60%, white);
+  --color-qic-primary-teal-80:  color-mix(in oklab, var(--qic-primary-teal) 80%, white);
+
+  --color-qic-primary-clay-20:  color-mix(in oklab, var(--qic-primary-clay) 20%, white);
+  --color-qic-primary-clay-40:  color-mix(in oklab, var(--qic-primary-clay) 40%, white);
+  --color-qic-primary-clay-60:  color-mix(in oklab, var(--qic-primary-clay) 60%, white);
+  --color-qic-primary-clay-80:  color-mix(in oklab, var(--qic-primary-clay) 80%, white);
+
+  /* Secondary */
+  --color-qic-secondary-slate-20:  color-mix(in oklab, var(--qic-secondary-slate) 20%, white);
+  --color-qic-secondary-slate-40:  color-mix(in oklab, var(--qic-secondary-slate) 40%, white);
+  --color-qic-secondary-slate-60:  color-mix(in oklab, var(--qic-secondary-slate) 60%, white);
+  --color-qic-secondary-slate-80:  color-mix(in oklab, var(--qic-secondary-slate) 80%, white);
+
+  --color-qic-secondary-sky-20:    color-mix(in oklab, var(--qic-secondary-sky) 20%, white);
+  --color-qic-secondary-sky-40:    color-mix(in oklab, var(--qic-secondary-sky) 40%, white);
+  --color-qic-secondary-sky-60:    color-mix(in oklab, var(--qic-secondary-sky) 60%, white);
+  --color-qic-secondary-sky-80:    color-mix(in oklab, var(--qic-secondary-sky) 80%, white);
+
+  --color-qic-secondary-forest-20: color-mix(in oklab, var(--qic-secondary-forest) 20%, white);
+  --color-qic-secondary-forest-40: color-mix(in oklab, var(--qic-secondary-forest) 40%, white);
+  --color-qic-secondary-forest-60: color-mix(in oklab, var(--qic-secondary-forest) 60%, white);
+  --color-qic-secondary-forest-80: color-mix(in oklab, var(--qic-secondary-forest) 80%, white);
+
+  --color-qic-secondary-sage-20:   color-mix(in oklab, var(--qic-secondary-sage) 20%, white);
+  --color-qic-secondary-sage-40:   color-mix(in oklab, var(--qic-secondary-sage) 40%, white);
+  --color-qic-secondary-sage-60:   color-mix(in oklab, var(--qic-secondary-sage) 60%, white);
+  --color-qic-secondary-sage-80:   color-mix(in oklab, var(--qic-secondary-sage) 80%, white);
+
+  --color-qic-secondary-plum-20:   color-mix(in oklab, var(--qic-secondary-plum) 20%, white);
+  --color-qic-secondary-plum-40:   color-mix(in oklab, var(--qic-secondary-plum) 40%, white);
+  --color-qic-secondary-plum-60:   color-mix(in oklab, var(--qic-secondary-plum) 60%, white);
+  --color-qic-secondary-plum-80:   color-mix(in oklab, var(--qic-secondary-plum) 80%, white);
+
+  --color-qic-secondary-rose-20:   color-mix(in oklab, var(--qic-secondary-rose) 20%, white);
+  --color-qic-secondary-rose-40:   color-mix(in oklab, var(--qic-secondary-rose) 40%, white);
+  --color-qic-secondary-rose-60:   color-mix(in oklab, var(--qic-secondary-rose) 60%, white);
+  --color-qic-secondary-rose-80:   color-mix(in oklab, var(--qic-secondary-rose) 80%, white);
+
+  --color-qic-secondary-sand-20:   color-mix(in oklab, var(--qic-secondary-sand) 20%, white);
+  --color-qic-secondary-sand-40:   color-mix(in oklab, var(--qic-secondary-sand) 40%, white);
+  --color-qic-secondary-sand-60:   color-mix(in oklab, var(--qic-secondary-sand) 60%, white);
+  --color-qic-secondary-sand-80:   color-mix(in oklab, var(--qic-secondary-sand) 80%, white);
+
+  --color-qic-secondary-ink-20:    color-mix(in oklab, var(--qic-secondary-ink) 20%, white);
+  --color-qic-secondary-ink-40:    color-mix(in oklab, var(--qic-secondary-ink) 40%, white);
+  --color-qic-secondary-ink-60:    color-mix(in oklab, var(--qic-secondary-ink) 60%, white);
+  --color-qic-secondary-ink-80:    color-mix(in oklab, var(--qic-secondary-ink) 80%, white);
+}
+
+/* Defaults (light) */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+/* Headings default to Georgia (font-heading) */
+:is(h1,h2,h3,h4,h5,h6) {
+  font-family: var(--font-heading);
 }
